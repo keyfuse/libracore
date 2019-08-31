@@ -1,0 +1,16 @@
+language: go
+sudo: required
+go:
+  - 1.x
+
+before_install:
+  - go get github.com/pierrre/gotestcover
+  - go get github.com/stretchr/testify/assert
+
+script:
+  - make test
+  - make check
+
+after_success:
+  # send coverage reports to Codecov
+  - bash <(curl -s https://codecov.io/bash) -f "!mock.go"
