@@ -12,7 +12,7 @@ import (
 
 func TestHttp(t *testing.T) {
 	{
-		rsp, _ := NewRequest().Post("https://baidu.com", nil)
+		rsp, _ := NewRequest().Post("https://github.com", nil)
 		time := rsp.Cost()
 		t.Log(time)
 		rsp.Body()
@@ -20,14 +20,14 @@ func TestHttp(t *testing.T) {
 	}
 
 	{
-		rsp, _ := NewRequest().SetTimeout(10).SetHeaders("k", "v").Post("https://baidu.com", nil)
+		rsp, _ := NewRequest().SetTimeout(10).SetHeaders("k", "v").Post("https://github.com", nil)
 		var i int
 		rsp.Json(&i)
 		t.Log(i)
 	}
 
 	{
-		rsp, _ := NewRequest().Get("https://baidu.com")
+		rsp, _ := NewRequest().Get("https://github.com")
 		time := rsp.Cost()
 		t.Log(time)
 	}
