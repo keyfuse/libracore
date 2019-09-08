@@ -8,6 +8,8 @@ package xcore
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestHttp(t *testing.T) {
@@ -22,7 +24,8 @@ func TestHttp(t *testing.T) {
 	{
 		rsp, _ := NewRequest().SetTimeout(10).SetHeaders("k", "v").Post("https://github.com", nil)
 		var i int
-		rsp.Json(&i)
+		err := rsp.Json(&i)
+		assert.Nil(t, err)
 		t.Log(i)
 	}
 

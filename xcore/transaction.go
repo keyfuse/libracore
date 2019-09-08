@@ -137,7 +137,7 @@ func (tx *Transaction) Build() (*Transaction, error) {
 			SenderAccount:  tx.from.Hash(),
 			MaxGasAmount:   tx.maxGasAmount,
 			GasUnitPrice:   tx.gasUnitPrice,
-			Payload:        &xproto.RawTransaction_Program{program},
+			Payload:        &xproto.RawTransaction_Program{Program: program},
 			ExpirationTime: uint64(time.Now().Unix()) + tx.expirationTime,
 		}
 
@@ -146,8 +146,12 @@ func (tx *Transaction) Build() (*Transaction, error) {
 		}
 		hashPrefix, _ := hex.DecodeString(LIBRA_HASH_PREFIX_HEX)
 		hasher := sha3.New256()
-		hasher.Write(hashPrefix)
-		hasher.Write(tx.txproto[:])
+		if _, err := hasher.Write(hashPrefix); err != nil {
+			return nil, err
+		}
+		if _, err := hasher.Write(tx.txproto[:]); err != nil {
+			return nil, err
+		}
 		tx.sighash = hasher.Sum(tx.sighash[:0])
 	}
 

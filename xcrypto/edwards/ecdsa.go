@@ -26,9 +26,6 @@ var (
 	// oneInitializer is used to fill a byte slice with byte 0x01.  It is provided
 	// here to avoid the need to create it multiple times.
 	oneInitializer = []byte{0x01}
-
-	// ecTypeEdwards is the ECDSA type for the chainec interface.
-	ecTypeEdwards = 1
 )
 
 // SignFromSecretNoReader signs a message 'hash' using the given private key
@@ -74,9 +71,15 @@ func SignFromScalar(priv *PrivateKey, nonce []byte, hash []byte) (r, s *big.Int,
 	// h = hash512(k || A || M)
 	h := sha512.New()
 	h.Reset()
-	h.Write(encodedR[:])
-	h.Write(publicKey[:])
-	h.Write(hash)
+	if _, err := h.Write(encodedR[:]); err != nil {
+		return nil, nil, err
+	}
+	if _, err := h.Write(publicKey[:]); err != nil {
+		return nil, nil, err
+	}
+	if _, err := h.Write(hash); err != nil {
+		return nil, nil, err
+	}
 
 	// s = r + h * a
 	var hramDigest [64]byte
@@ -129,9 +132,15 @@ func SignThreshold(priv *PrivateKey, groupPub *PublicKey, hash []byte, privNonce
 	var hramDigest [64]byte
 	h := sha512.New()
 	h.Reset()
-	h.Write(encodedGroupR[:])
-	h.Write(groupPub.Serialize()[:])
-	h.Write(hash)
+	if _, err := h.Write(encodedGroupR[:]); err != nil {
+		return nil, nil, err
+	}
+	if _, err := h.Write(groupPub.Serialize()[:]); err != nil {
+		return nil, nil, err
+	}
+	if _, err := h.Write(hash); err != nil {
+		return nil, nil, err
+	}
 	h.Sum(hramDigest[:0])
 	var hramDigestReduced [32]byte
 	edwards25519.ScReduce(&hramDigestReduced, &hramDigest)

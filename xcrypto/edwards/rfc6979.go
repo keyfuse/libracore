@@ -112,7 +112,9 @@ func hashToInt(hash []byte, c *TwistedEdwardsCurve) *big.Int {
 // mac returns an HMAC of the given key and message.
 func mac(alg func() hash.Hash, k, m []byte) []byte {
 	h := hmac.New(alg, k)
-	h.Write(m)
+	if _, err := h.Write(m); err != nil {
+		panic(err)
+	}
 	return h.Sum(nil)
 }
 

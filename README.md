@@ -1,6 +1,6 @@
 # libracore – A Simple, Powerful Library for Libra Blockchain.
 
-[![Build Status](https://travis-ci.org/keyfuse/libracore.png)](https://travis-ci.org/keyfuse/libracore) [![Go Report Card](https://goreportcard.com/badge/github.com/keyfuse/libracore)](https://goreportcard.com/report/github.com/keyfuse/libracore) [![codecov.io](https://codecov.io/gh/keyfuse/libracore/graphs/badge.svg)](https://codecov.io/gh/keyfuse/libracore/branch/master) [![GPL License](http://img.shields.io/badge/license-GPL-blue.svg?style=flat)](LICENSE) 
+[![Build Status](https://travis-ci.org/keyfuse/libracore.png)](https://travis-ci.org/keyfuse/libracore) [![GolangCI](https://golangci.com/badges/github.com/keyfuse/libracore.svg)](https://golangci.com/r/github.com/keyfuse/libracore)[![Go Report Card](https://goreportcard.com/badge/github.com/keyfuse/libracore)](https://goreportcard.com/report/github.com/keyfuse/libracore) [![codecov.io](https://codecov.io/gh/keyfuse/libracore/graphs/badge.svg)](https://codecov.io/gh/keyfuse/libracore/branch/master) [![GPL License](http://img.shields.io/badge/license-GPL-blue.svg?style=flat)](LICENSE)
 
 ## libracore
 

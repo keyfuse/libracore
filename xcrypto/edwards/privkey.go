@@ -49,7 +49,9 @@ func GenerateKeyPair() (*PrivateKey, *PublicKey, error) {
 // computeScalar obtains a private scalar from a private key.
 func computeScalar(privateKey *[PrivKeyBytesLen]byte) *[PrivScalarSize]byte {
 	h := sha512.New()
-	h.Write(privateKey[:32])
+	if _, err := h.Write(privateKey[:32]); err != nil {
+		panic(err)
+	}
 	digest := h.Sum(nil)
 
 	digest[0] &= 248  // Make a multiple of 8
