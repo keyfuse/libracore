@@ -148,8 +148,14 @@ func (c *Client) SubmitTransaction(req *xproto.SubmitTransactionRequest) error {
 	if err != nil {
 		return err
 	}
+	if vmStatus := resp.GetVmStatus(); vmStatus != nil {
+		return fmt.Errorf("vm.error:+%v", vmStatus)
+	}
+	if mpStatus := resp.GetMempoolStatus(); mpStatus != nil {
+		return fmt.Errorf("mempool.error:%+v", mpStatus)
+	}
 	if acStatus := resp.GetAcStatus(); acStatus.Code != xproto.AdmissionControlStatusCode_Accepted {
-		return fmt.Errorf("transfer.transaction.failed:%+v", acStatus)
+		return fmt.Errorf("ac.err:%+v", acStatus)
 	}
 	return nil
 }

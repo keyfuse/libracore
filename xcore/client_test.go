@@ -77,7 +77,7 @@ func TestClientTransferCoins(t *testing.T) {
 			Address: from,
 			KeyPair: keypair1,
 		}
-		err := client.TransferCoins(sender, toaddr, 124356, 0, 100000)
+		err := client.TransferCoins(sender, toaddr, 124356, 1, 140000)
 		assert.Nil(t, err)
 	}
 
@@ -88,7 +88,7 @@ func TestClientTransferCoins(t *testing.T) {
 			Address: from,
 			KeyPair: keypair1,
 		}
-		err := client.TransferCoinsAsync(sender, toaddr, 124356, 0, 100000)
+		err := client.TransferCoinsAsync(sender, toaddr, 124356, 1, 140000)
 		assert.Nil(t, err)
 	}
 }

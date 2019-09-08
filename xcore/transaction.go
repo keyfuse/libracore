@@ -118,7 +118,6 @@ func (tx *Transaction) Build() (*Transaction, error) {
 		if err != nil {
 			return nil, err
 		}
-		code, _ := hex.DecodeString(xmove.PEER_TO_PEER_TRANSFER_OPCODE)
 		amount := make([]byte, 8)
 		binary.LittleEndian.PutUint64(amount, tx.sendValue)
 
@@ -127,7 +126,7 @@ func (tx *Transaction) Build() (*Transaction, error) {
 		arg := []*xproto.TransactionArgument{arg1, arg2}
 
 		modules := [][]byte{}
-		program = &xproto.Program{Code: code, Arguments: arg, Modules: modules}
+		program = &xproto.Program{Code: xmove.PEER_TO_PEER_TRANSFER_BYTECODE, Arguments: arg, Modules: modules}
 	}
 
 	// Raw transaction hash.

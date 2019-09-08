@@ -17,13 +17,19 @@ const (
 	AccountStatePath = "01217da6c6b3e19f1825cfb2676daecce3bf3de03cf26647c78df00b371b25cc97"
 )
 
+// Event --
+type Event struct {
+	Count uint64
+	Key   []byte
+}
+
 // AccountState --
 type AccountState struct {
 	AuthenticationKey             string
 	Balance                       uint64
 	SequenceNumber                uint64
-	SentEventsCount               uint64
-	RecievedEventsCount           uint64
+	SentEvents                    Event
+	RecievedEvents                Event
 	DelegatedWithdrawalCapability bool
 }
 
@@ -48,10 +54,25 @@ func (a *AccountState) Deserialize(payload []byte) error {
 	if a.DelegatedWithdrawalCapability, err = buf.ReadBool(); err != nil {
 		return err
 	}
-	if a.RecievedEventsCount, err = buf.ReadU64(); err != nil {
+
+	if a.RecievedEvents.Count, err = buf.ReadU64(); err != nil {
 		return err
 	}
-	if a.SentEventsCount, err = buf.ReadU64(); err != nil {
+	var rel uint32
+	if rel, err = buf.ReadU32(); err != nil {
+		return err
+	}
+	if a.RecievedEvents.Key, err = buf.ReadBytes(int(rel)); err != nil {
+		return err
+	}
+	if a.SentEvents.Count, err = buf.ReadU64(); err != nil {
+		return err
+	}
+	var sel uint32
+	if sel, err = buf.ReadU32(); err != nil {
+		return err
+	}
+	if a.SentEvents.Key, err = buf.ReadBytes(int(sel)); err != nil {
 		return err
 	}
 	if a.SequenceNumber, err = buf.ReadU64(); err != nil {
